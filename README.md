@@ -1,63 +1,88 @@
-# 🎵 Server Music
+🎧 Server Music API
 
-Um servidor simples e eficiente desenvolvido em **Flask (Python)** para **disponibilizar músicas** (arquivos MP3, WAV etc.) a outros projetos, como **aplicativos mobile**, **sites de música** ou **players integrados**.  
+Server Music é um servidor simples de músicas que fornece informações por meio de uma API RESTful.
+Você pode acessar o servidor online em:
+🔗 https://server-music-joao.onrender.com
 
-Ideal para desenvolvedores que precisam de um **endpoint backend leve e rápido** para servir faixas de áudio hospedadas localmente.
+🧠 Tecnologias Utilizadas
 
----
+Python 3
 
-## 🚀 Tecnologias Utilizadas
+Flask — Framework principal para criação da API
 
-- **Python 3.10+**
-- **Flask**
-- **Flask-CORS**
-- **Gunicorn** (para deploy em produção, ex: Render, Railway, etc.)
+Render — Hospedagem do servidor
 
----
+JSON — Formato de resposta dos endpoints
 
-## 📁 Estrutura do Projeto
+HTML / CSS (Static) — Arquivos e capas armazenados em /static/assets
 
-server-music/
-│
-├── app/
-│ ├── init.py
-│ ├── routes.py # Rotas principais do servidor
-│ ├── static/
-│ │ └── musics/ # Pasta onde ficam os arquivos de música (.mp3, .wav)
-│ └── templates/ # Páginas HTML, se houver interface opcional
-│
-├── run.py # Ponto de entrada do servidor Flask
-├── requirements.txt # Dependências do projeto
-└── README.md
+🌐 URL Base
+https://server-music-joao.onrender.com
 
-yaml
-Copiar código
+📍 Endpoints
+GET /
 
----
+Retorna uma mensagem confirmando que o servidor está ativo.
 
-## ⚙️ Instalação e Execução Local
+Exemplo de resposta:
 
-### 1. Clone o repositório
-```bash
-git clone https://github.com/SEU_USUARIO/server-music.git
-cd server-music
-2. Crie um ambiente virtual
-bash
-Copiar código
-python -m venv .venv
-source .venv/bin/activate   # (Linux/Mac)
-.venv\Scripts\activate      # (Windows)
-3. Instale as dependências
-bash
-Copiar código
-pip install -r requirements.txt
-4. Execute o servidor
-bash
-Copiar código
-python run.py
-O servidor estará disponível em:
-👉 http://127.0.0.1:5000
+{
+  "message": "Server Music API online"
+}
 
-🎧 Endpoints Principais
-🔹 GET /musics
-Retorna uma lista com todas as músicas disponíveis no servidor.
+GET /api/songs
+
+Retorna uma lista de todas as músicas disponíveis no servidor.
+
+Exemplo de resposta:
+
+[
+  {
+    "id": 1,
+    "title": "Espresso",
+    "artist": "Sabrina Carpenter",
+    "cover_url": "/static/assets/espresso.png"
+  },
+  {
+    "id": 2,
+    "title": "Say So",
+    "artist": "Doja Cat",
+    "cover_url": "/static/assets/sayso.png"
+  }
+]
+
+GET /api/songs/<id>
+
+Retorna os dados de uma música específica pelo ID informado.
+
+Exemplo:
+
+GET /api/songs/1
+
+
+Resposta:
+
+{
+  "id": 1,
+  "title": "Espresso",
+  "artist": "Sabrina Carpenter",
+  "cover_url": "/static/assets/espresso.png"
+}
+
+GET /static/assets/<filename>
+
+Retorna a imagem da música (capa) diretamente.
+Exemplo:
+
+https://server-music-joao.onrender.com/static/assets/espresso.png
+
+⚠️ Códigos de Erro
+Código	Descrição	Exemplo de resposta
+404	Música não encontrada	{"error": "Song not found"}
+500	Erro interno do servidor	{"error": "Internal server error"}
+🧩 Estrutura do Projeto
+server-music-main/
+├── run.py               # Código principal do servidor Flask
+├── requirements.txt     # Dependências do projeto
+└── static/
+    └── assets/          # Capas das músicas
